@@ -5,8 +5,25 @@ interface TodoListProps {
   todos: Array<TodoItemProps>
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos: todosProp }) => {
-  const [todos, setTodos] = useState<TodoListProps['todos']>(todosProp)
+const todosInitialValue: Array<TodoItemProps> = [
+  {
+    id: 1,
+    text: 'Learn React',
+    completed: false,
+    onToggle: () => {},
+    onDelete: () => {},
+  },
+  {
+    id: 2,
+    text: 'Learn TypeScript',
+    completed: false,
+    onToggle: () => {},
+    onDelete: () => {},
+  },
+]
+
+const TodoList: React.FC<TodoListProps> = () => {
+  const [todos, setTodos] = useState<TodoListProps['todos']>(todosInitialValue)
   const [newTodo, setNewTodo] = useState('')
 
   const addTodo = () => {
