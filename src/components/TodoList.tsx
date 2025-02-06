@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TodoItem, { TodoItemProps } from './TodoItem'
 
 interface TodoListProps {
@@ -23,8 +23,15 @@ const todosInitialValue: Array<TodoItemProps> = [
 ]
 
 const TodoList: React.FC<TodoListProps> = () => {
-  const [todos, setTodos] = useState<TodoListProps['todos']>(todosInitialValue)
+  const [todos, setTodos] = useState<TodoItemProps[]>(() => {
+    return JSON.parse(localStorage.getItem('todos') || 'null') || todosInitialValue
+  })
+
   const [newTodo, setNewTodo] = useState('')
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   const addTodo = () => {
     if (newTodo.trim() === '') return
